@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Trang chủ</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<style>
+  #btn-them:hover {
+    transform: scale(1.05);
+    background-color: #555b5e;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+    border-radius: 30%;
+  }
+
+  #btn-xoa:hover {
+    transform: scale(1.05);
+    background-color: #555b5e;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+    border-radius: 30%;
+  }
+
+  #btn-cap-nhat:hover {
+    transform: scale(1.05);
+    background-color: #555b5e;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+    border-radius: 30%;
+  }
+</style>
+
+<body>
+
+  <nav class="navbar navbar-inverse" style="background-color: rgb(38, 35, 35);">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Quản Lý Cửa Hàng</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li><a href="#">Trang chủ</a></li>
+        <li><a href="#">Sản phẩm</a></li>
+        <li><a href="#">Liên hệ</a></li>
+      </ul>
+      <form class="navbar-form navbar-left" action="/action_page.php">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" name="search">
+        </div>
+        <button type="submit" class="btn btn-default">Tìm kiếm</button>
+      </form>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <h4>Sản phẩm : </h4>
+      </div>
+      <div class="col-md-9">
+        <input type="text" class="form-control" placeholder="Nhập tên sản phẩm" id="productName">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3">
+        <h4>Giá tiền : </h4>
+      </div>
+      <div class="col-md-9">
+        <input type="text" class="form-control" placeholder="Nhập giá tiền" id="productPrice">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3">
+        <h4>Giảm giá(%) : </h4>
+      </div>
+      <div class="col-md-9">
+        <input type="text" class="form-control" placeholder="Nhập giảm giá" id="productDiscount">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3">
+        <h4>Hình ảnh : </h4>
+      </div>
+      <div class="col-md-9">
+        <input type="text" id="avatar" name="avatar" class="form-control" placeholder="Nhập URL hình ảnh" />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4" style="text-align: center;padding: 30px;">
+        <button class="colorBtn" id="btn-them"
+          style="text-align: center;border-radius: 12px;height: 60px;background-color: rgb(47, 49, 49);width: 80%;">
+          <div style="color: white;font-size: large;">Thêm</div>
+        </button>
+      </div>
+      <div class="col-md-4" style="text-align: center;padding: 30px;">
+        <button class="colorBtn" id="btn-xoa"
+          style="text-align: center;border-radius: 12px;height: 60px;background-color: rgb(27, 28, 28);width: 80%;">
+          <div style="color: white;font-size: large;">Xóa</div>
+        </button>
+      </div>
+      <div class="col-md-4" style="text-align: center;padding: 30px;">
+        <button class="colorBtn" id="btn-cap-nhat"
+          style="text-align: center;border-radius: 12px;height: 60px;background-color: rgb(56, 61, 61);width: 80%;">
+          <div style="color: white;font-size: large;">Cập nhật</div>
+        </button>
+      </div>
+
+    </div>
+
+
+  </div>
+
+  <table class="table" class="table table-info table-striped" style="width: 100%; margin-top: 20px;">
+    <thead>
+      <tr>
+        <th><input type="checkbox" id="checkAll"></th>
+        <th>Tên sản phẩm</th>
+        <th>Giá tiền</th>
+        <th>Giảm giá</th>
+        <th>Giá sau khi giảm</th>
+        <th>Hình ảnh</th>
+      </tr>
+    </thead>
+    <tbody id="productTableBody">
+    </tbody>
+  </table>
+
+  <script>
+    $(document).ready(function () {
+      $('#btn-them').click(function () {
+        var productName = $('#productName').val();
+        var productPrice = $('#productPrice').val();
+        var productDiscount = $('#productDiscount').val();
+        var discountedPrice = productPrice - (productPrice * productDiscount / 100);
+        var avatar = $('#avatar').val();
+        var dslist = [];
+        var thongtin = {
+          name: productName,
+          price: productPrice,
+          discount: productDiscount,
+          image: avatar
+        }
+
+        dslist.push(thongtin);
+        var tableBody = $('#productTableBody');
+      tableBody.append(
+        '<tr>' +
+        '<td><input type="checkbox" class="row-checkbox"></td>' +
+        '<td>' + thongtin.name + '</td>' +
+        '<td>' + thongtin.price + '</td>' +
+        '<td>' + thongtin.discount + '</td>' +
+        '<td>' + discountedPrice + '</td>' +
+        '<td><img src="' + thongtin.image + '" alt="Product Image" style="width: 50px; height: 50px;"></td>' +
+        '</tr>'
+      );
+      ///console.log(dslist);
+        $('#productName').val('');
+        $('#productPrice').val('');
+        $('#productDiscount').val('');
+        $('#avatar').val('');
+      });
+
+
+      $('#btn-xoa').click(function () {
+        $('input.row-checkbox:checked').each(function () {
+          $(this).closest('tr').remove();
+        });
+      });
+
+
+      $('#checkAll').click(function () {
+        var checked = $(this).prop('checked');
+        $('.row-checkbox').prop('checked', checked);
+      });
+
+
+      $('#btn-cap-nhat').click(function () {
+        var productName = $('#productName').val();
+        var productPrice = $('#productPrice').val();
+        var productDiscount = $('#productDiscount').val();
+        var file = $('#avatar')[0].files[0];
+        var imageSrc = URL.createObjectURL(file);
+        $('#preview').attr('src', imageSrc);
+
+        // Chỉ cập nhật dòng đầu tiên được chọn
+        var checkedRow = $('.row-checkbox:checked').first().closest('tr');
+        if (checkedRow.length === 0) {
+          alert('Vui lòng chọn một dòng để cập nhật!');
+          return;
+        }
+
+        checkedRow.find('td').eq(1).text(productName);
+        checkedRow.find('td').eq(2).text(productPrice);
+        checkedRow.find('td').eq(3).text(productDiscount);
+        checkedRow.find('td').eq(4).html('<img src="' + avatar + '" alt="Product Image" style="width: 50px; height: 50px;">');
+
+        // Xóa chọn sau khi cập nhật
+        checkedRow.find('.row-checkbox').prop('checked', false);
+        $('#checkAll').prop('checked', false);
+        $('#productName').val('');
+        $('#productPrice').val('');
+        $('#productDiscount').val('');
+        $('#avatar').val('');
+      });
+    });
+  </script>
+
+</body>
+
+</html>
